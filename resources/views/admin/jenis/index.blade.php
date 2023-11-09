@@ -36,7 +36,9 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$jenis->nama}}</td>
-                        <td>Ubah</td>
+                        <td>
+                            <a href="{{url('admin/jenis_produk/edit/'.$jenis->id)}}">Edit</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
