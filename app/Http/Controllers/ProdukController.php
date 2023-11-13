@@ -36,6 +36,34 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $request->validate([
+            'kode' => 'required |unique:produk|max:10',            
+            'nama' => 'required |max:45',            
+            'harga_beli' => 'required |numeric',            
+            'harga_jual' => 'required |numeric', 
+            'stok' => 'required |integer',
+            'min_stok' => 'required |integer',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,gif,png,svg|max:2048',
+            'deskripsi' => 'nullable|string|min:10',
+            'jenis_produk_id' => 'required |integer',           
+        ],
+        [
+            'kode.max' => 'Kode Maksimal 10 karakter',
+            'kode.required' => 'Kode Wajib Di Isi!',
+            'kode.unique' => 'Kode Sudah Terisi Pada Data Lain',
+            'nama.required' => 'Nama Wajib Di Isi!',
+            'nama.max' => 'Nama Maksimal 45 Karekter',
+            'harga_beli.required' => 'Harga Beli Harus Di Isi!',
+            'harga_beli.numeric' => 'Harus Angka!',
+            'harga_jual.required' => 'Harga Jual Harus Di Isi!',
+            'harga_jual.numeric' => 'Harus Angka!',
+            'stok.required' => 'Stok Harus Di Isi',
+            'min_stok.required' => 'Minimal Stok Harus Di Isi',
+            'foto.max' => 'Maksimal 2 MB',
+            'foto.image' => 'File Ekstensi Harus JPG, JPEG, GIF, PNG, SVG',
+        ]
+    );
         // proses upload foto
         if(!empty($request->foto)){
             $filename = 'foto-'.uniqid().'.'.$request->foto->extension();
@@ -91,6 +119,29 @@ class ProdukController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'nama' => 'required |max:45',            
+            'harga_beli' => 'required |numeric',            
+            'harga_jual' => 'required |numeric', 
+            'stok' => 'required |integer',
+            'min_stok' => 'required |integer',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,gif,png,svg|max:2048',
+            'deskripsi' => 'nullable|string|min:10',
+            'jenis_produk_id' => 'required |integer',           
+        ],
+        [
+            'nama.required' => 'Nama Wajib Di Isi!',
+            'nama.max' => 'Nama Maksimal 45 Karekter',
+            'harga_beli.required' => 'Harga Beli Harus Di Isi!',
+            'harga_beli.numeric' => 'Harus Angka!',
+            'harga_jual.required' => 'Harga Jual Harus Di Isi!',
+            'harga_jual.numeric' => 'Harus Angka!',
+            'stok.required' => 'Stok Harus Di Isi',
+            'min_stok.required' => 'Minimal Stok Harus Di Isi',
+            'foto.max' => 'Maksimal 2 MB',
+            'foto.image' => 'File Ekstensi Harus JPG, JPEG, GIF, PNG, SVG',
+        ]
+    );
         // update foto
         $foto = DB::table('produk')->select('foto')->where('id', $request->id)->get();
         foreach($foto as $f){
